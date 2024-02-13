@@ -8,11 +8,6 @@ export class Game extends Scene
         super('Game');
     }
 
-    init()
-    {
-        EventBus.emit('current-scene-ready', this);
-    }
-
     create ()
     {
         this.cameras.main.setBackgroundColor(0x00ff00);
@@ -28,6 +23,8 @@ export class Game extends Scene
         this.input.once('pointerdown', () => {
             this.changeScene();
         });
+
+        EventBus.emit('current-scene-ready', this);
     }
 
     changeScene()

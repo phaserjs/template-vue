@@ -12,8 +12,7 @@ export class MainMenu extends Scene {
 
     init()
     {
-        EventBus.emit('current-scene-ready', this);
-        // Restar tween
+        // Restart tween
         this.logo_tween = null;
     }
 
@@ -32,6 +31,8 @@ export class MainMenu extends Scene {
         this.input.once('pointerdown', () => {     
             this.changeScene();
         });
+        
+        EventBus.emit('current-scene-ready', this);
     }
 
     changeScene()

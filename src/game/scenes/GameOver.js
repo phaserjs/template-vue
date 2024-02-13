@@ -7,11 +7,6 @@ export class GameOver extends Scene
     {
         super('GameOver');
     }
-    
-    init()
-    {
-        EventBus.emit('current-scene-ready', this);
-    }
 
     create ()
     {
@@ -28,6 +23,8 @@ export class GameOver extends Scene
         this.input.once('pointerdown', () => {
             this.changeScene();
         });
+
+        EventBus.emit('current-scene-ready', this);
     }
 
     changeScene()

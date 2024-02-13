@@ -43,7 +43,7 @@ We have provided a default project structure to get you started. This is as foll
 - `src/game/PhaserGame.vue` - The Vue component that initializes the Phaser Game and serve like a bridge between Vue and Phaser.
 - `src/game/EventBus.js` - A simple event bus to communicate between Vue and Phaser.
 - `src/game` - Containts the game source code.
-- `src/game/main.js` - The main **game** entry point. This contains the game configuration and starts the game.
+- `src/game/main.js` - The main **game** entry point. This contains the game configuration and start the game.
 - `src/game/scenes/` - The Phaser Scenes are in this folder.
 - `public/style.css` - Some simple CSS rules to help with page layout.
 - `public/assets` - Contains the static assets used by the game.
@@ -70,6 +70,25 @@ EventBus.on('event-name', (data) => {
 
 Futhermore PhaserGame component has exposed the game instance and the current scene instance to the Vue component (defineExpose({ scene, game })). You can access them like state reference (ref) or you can get the current scene like component event "current-active-scene".
 
+**Important**: To expose some scene you need to add the emit event "current-scene-ready" using the EventBus in your phaser scene class.
+
+```js
+class MyScene extends Phaser.Scene {
+    constructor() {
+        super({ key: 'MyScene' });
+    }
+
+    create() {
+        // Game Objects and logic
+        ...
+        // End line of the create method
+        EventBus.emit('current-scene-ready', this);
+    }
+    ...
+}
+```
+
+Component usage example:
 ```js
 // In some parent component
 <script setup>
