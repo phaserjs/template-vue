@@ -14,6 +14,12 @@
         "url": "https://github.com/phaserjs/template-vue/issues"
     },
     "homepage": "https://github.com/phaserjs/template-vue#readme",
+    "keywords": [
+        "phaser",
+        "phaser3",
+        "vue",
+        "vite"
+    ],
     "scripts": {
         "dev": "vite --config vite/config.dev.mjs",
         "build": "vite build --config vite/config.prod.mjs",
