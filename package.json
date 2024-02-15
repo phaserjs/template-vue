@@ -22,10 +22,7 @@
     ],
     "scripts": {
         "dev": "vite --config vite/config.dev.mjs",
-        "build": "vite build --config vite/config.prod.mjs",
-        "preview": "vite preview",
-        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-        "format": "prettier --write src/"
+        "build": "vite build --config vite/config.prod.mjs"
     },
     "dependencies": {
         "phaser": "^3.70.0",
