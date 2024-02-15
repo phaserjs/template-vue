@@ -4,9 +4,9 @@ import { ref, toRaw } from 'vue';
 import PhaserGame from './game/PhaserGame.vue';
 
 // Only we can move the logo in the main menu
-const can_move_logo = ref(false);
+const can_move_logo = ref();
 // Reference to the PhaserGame component (game and scene are exposed)
-const phaser_ref = ref(null);
+const phaser_ref = ref();
 const logo_position = ref({ x: 0, y: 0 });
 
 const changeScene = () => {
