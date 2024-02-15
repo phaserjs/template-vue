@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import { EventBus } from './EventBus';
 import StartGame from './main';
 
@@ -21,6 +21,15 @@ onMounted(() => {
 
     });
 
+});
+
+onUnmounted(() => {
+
+    if(game.value) {
+        game.value.destroy(true);
+        game.value = null;
+    }
+    
 });
 
 defineExpose({ scene, game });
