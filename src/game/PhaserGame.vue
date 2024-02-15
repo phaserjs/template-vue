@@ -13,11 +13,11 @@ onMounted(() => {
 
     game.value = StartGame('game-container');
 
-    EventBus.on('current-scene-ready', (scene) => {
+    EventBus.on('current-scene-ready', (currentScene) => {
 
-        emit('current-active-scene', scene);
+        emit('current-active-scene', currentScene);
 
-        scene.value = scene;
+        scene.value = currentScene;
 
     });
 
