@@ -1,6 +1,6 @@
 # Phaser Vue Template
 
-This is a Phaser 3 project template that uses Vue framework. It supports hot-reloading for quick development workflow and includes scripts to generate production-ready builds.
+This is a Phaser 3 project template that uses the Vue framework and Vite for bundling. It includes a bridge for Vue to Phaser game communication, hot-reloading for quick development workflow and scripts to generate production-ready builds.
 
 ### Versions
 
@@ -50,16 +50,16 @@ We have provided a default project structure to get you started. This is as foll
 
 ## Vue Bridge
 
-The `PhaserGame.vue` component is the bridge between Vue and Phaser. It initializes the Phaser game and handles the communication between Vue and Phaser.
+The `PhaserGame.vue` component is the bridge between Vue and Phaser. It initializes the Phaser game and passes events between the two.
 
-To communicate between Vue and Phaser, you can use the **EventBus.js** file. This is a simple event bus that allows you to emit and listen for events in both Vue and Phaser.
+To communicate between Vue and Phaser, you can use the **EventBus.js** file. This is a simple event bus that allows you to emit and listen for events from both Vue and Phaser.
 
 ```js
 // In Vue
-import { EventBus } from './EventBus.js'
+import { EventBus } from './EventBus';
 
 // Emit an event
-EventBus.emit('event-name', data)
+EventBus.emit('event-name', data);
 
 // In Phaser
 // Listen for an event
@@ -68,44 +68,69 @@ EventBus.on('event-name', (data) => {
 });
 ```
 
-Futhermore PhaserGame component has exposed the game instance and the current scene instance to the Vue component (defineExpose({ scene, game })). You can access them like state reference (ref) or you can get the current scene like component event "current-active-scene".
+In addition to this, the `PhaserGame` component exposes the Phaser game instance along with the most recently active Phaser Scene. You can pick these up from Vue via `(defineExpose({ scene, game }))`.
 
-**Important**: To expose some scene you need to add the emit event "current-scene-ready" using the EventBus in your phaser scene class.
+Once exposed, you can access them like any regular state reference.
+
+## Phaser Scene Handling
+
+In Phaser, the Scene is the lifeblood of your game. It is where you sprites, game logic and all of the Phaser systems live. You can also have multiple scenes running at the same time. This template provides a way to obtain the current active scene from Vue.
+
+You can get the current Phaser Scene from the component event `"current-active-scene"`. In order to do this, you need to emit the event `"current-scene-ready"` from the Phaser Scene class. This event should be emitted when the scene is ready to be used. You can see this done in all of the Scenes in our template.
+
+**Important**: When you add a new Scene to your game, make sure you expose to to Vue by emitting the `"current-scene-ready"` event via the `EventBus`, like this:
+
 
 ```js
-class MyScene extends Phaser.Scene {
-    constructor() {
-        super({ key: 'MyScene' });
+class MyScene extends Phaser.Scene
+{
+    constructor ()
+    {
+        super('MyScene');
     }
 
-    create() {
-        // Game Objects and logic
-        ...
-        // End line of the create method
+    create ()
+    {
+        // Your Game Objects and logic here
+
+        // At the end of create method:
         EventBus.emit('current-scene-ready', this);
     }
-    ...
 }
 ```
 
-Component usage example:
+You don't have to emit this event if you don't need to access the specific scene from Vue. Also, you don't have to emit it at the end of `create`, you can emit it at any point. For example, should your Scene be waiting for a network request or API call to complete, it could emit the event once that data is ready.
+
+### Vue Component Example
+
+Here's an example of how to access Phaser data for use in a Vue Component:
+
 ```js
-// In some parent component
+// In a parent component
 <script setup>
 import { ref, toRaw } from 'vue';
 
-const phaser_ref = ref(); // will contain the game instance and the current scene instance, you can access them like toRaw(phaser_ref.value.game) or toRaw(phaser_ref.value.scene)
+const phaserRef = ref();
+const game = toRaw(phaserRef.value.game);
+const scene = toRaw(phaserRef.value.scene);
 
 const onCurrentActiveScene = (scene) => {
-    // Do something with the scene
+    
+    // This is invoked
+
 }
 
 </script>
 <template>
-  <PhaserGame ref="phaser_ref" @current-active-scene="onCurrentActiveScene" />
+  <PhaserGame ref="phaserRef" @current-active-scene="onCurrentActiveScene" />
 </template>
-
 ```
+
+In the code above, you can get a reference to the current Phaser Game instance and the current Scene by calling `ref()`.
+
+From this state reference, the game instance is available via `toRaw(phaserRef.value.game)` and the most recently active Scene via `toRaw(phaserRef.value.scene)`
+
+The `onCurrentActiveScene` callback will also be invoked whenever the the Phaser Scene changes, as long as you emit the event via the EventBus, as outlined above.
 
 ## Handling Assets
 
