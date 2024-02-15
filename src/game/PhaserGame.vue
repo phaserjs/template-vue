@@ -25,7 +25,8 @@ onMounted(() => {
 
 onUnmounted(() => {
 
-    if(game.value) {
+    if (game.value)
+    {
         game.value.destroy(true);
         game.value = null;
     }
