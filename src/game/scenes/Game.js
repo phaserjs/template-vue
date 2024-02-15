@@ -1,5 +1,5 @@
-import { Scene } from 'phaser';
 import { EventBus } from '../EventBus';
+import { Scene } from 'phaser';
 
 export class Game extends Scene
 {
@@ -20,14 +20,10 @@ export class Game extends Scene
             align: 'center'
         }).setOrigin(0.5);
 
-        this.input.once('pointerdown', () => {
-            this.changeScene();
-        });
-
         EventBus.emit('current-scene-ready', this);
     }
 
-    changeScene()
+    changeScene ()
     {
         this.scene.start('GameOver');
     }
