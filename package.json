@@ -1,7 +1,7 @@
 {
     "name": "template-vue",
     "description": "A Phaser 3 project template that demonstrates Vue communication and uses Vite for bundling.",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "type": "module",
     "repository": {
         "type": "git",
@@ -25,17 +25,17 @@
         "build": "vite build --config vite/config.prod.mjs"
     },
     "dependencies": {
-        "phaser": "^3.80.0",
-        "vue": "^3.4.19"
+        "phaser": "^3.80.1",
+        "vue": "^3.4.20"
     },
     "devDependencies": {
         "@rushstack/eslint-patch": "^1.7.2",
         "@vitejs/plugin-vue": "^5.0.4",
         "@vue/eslint-config-prettier": "^9.0.0",
-        "eslint": "^8.56.0",
-        "eslint-plugin-vue": "^9.21.1",
+        "eslint": "^8.57.0",
+        "eslint-plugin-vue": "^9.22.0",
         "prettier": "^3.2.5",
-        "terser": "^5.27.2",
+        "terser": "^5.28.1",
         "vite": "^5.1.4"
     }
 }
