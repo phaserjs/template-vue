@@ -9,8 +9,8 @@ This is a Phaser 3 project template that uses the Vue framework and Vite for bun
 This template has been updated for:
 
 - [Phaser 3.80.1](https://github.com/phaserjs/phaser)
-- [Vue 3.4.19](https://github.com/vuejs)
-- [Vite 5.1.4](https://github.com/vitejs/vite)
+- [Vue 3.4.27](https://github.com/vuejs)
+- [Vite 5.2.11](https://github.com/vitejs/vite)
 
 ![screenshot](screenshot.png)
 
